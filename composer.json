@@ -1,0 +1,18 @@
+{
+    "name": "user/web-store-php",
+    "description": "Aplica\u0000\u0000o de uma loja virtual em PHP",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "leonanthomaz",
+            "email": "leonan.thomaz@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "core\\": "core/"
+        }
+    }
+}

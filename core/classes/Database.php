@@ -21,7 +21,7 @@ class Database {
         );
 
         //debug
-        $this->conectar->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
     private function desconectar(){
@@ -36,11 +36,11 @@ class Database {
 
         try{
             if(!empty($param)){
-                $stmt = $this->conectar->prepare($sql);
+                $stmt = $this->conexao->prepare($sql);
                 $stmt->execute($param);
                 $results =  $stmt->fetchAll(PDO::FETCH_CLASS);
             }else{
-                $stmt = $this->conectar->prepare($sql);
+                $stmt = $this->conexao->prepare($sql);
                 $stmt->execute();
                 $results =  $stmt->fetchAll(PDO::FETCH_CLASS);
             }

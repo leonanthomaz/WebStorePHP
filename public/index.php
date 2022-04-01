@@ -12,9 +12,12 @@ require_once '../config.php';
 //carrega todas as classes do projeto
 require_once '../vendor/autoload.php';
 
-$db = new Database();
-$clientes = $db->select('SELECT * FROM clientes');
+//Carregando Rotas
+require_once '../core/routes.php';
 
-echo '<pre>';
-print_r($clientes);
-echo '</pre>';
+// $db = new Database();
+// $clientes = $db->select('SELECT * FROM clientes');
+
+// echo '<pre>';
+// print_r($clientes);
+// echo '</pre>';

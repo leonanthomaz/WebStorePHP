@@ -2,6 +2,7 @@
 
 namespace core\classes;
 
+use Exception;
 use PDO;
 use PDOException;
 
@@ -30,6 +31,12 @@ class Database {
 
     public function select($sql, $param = null){
 
+        if(!preg_match('/^SELECT/i', $sql)){
+            throw new Exception('Não é uma instrução SELECT');
+            //die('Não é uma instrução SELECT');
+
+        }
+
         $this->conectar();
 
         $results = null;
@@ -52,5 +59,117 @@ class Database {
         $this->desconectar();
 
         return $results;
+    }
+
+    public function insert($sql, $param = null){
+
+        if(!preg_match('/^INSERT/i', $sql)){
+            throw new Exception('Não é uma instrução INSERT');
+            //die('Não é uma instrução SELECT');
+
+        }
+
+        $this->conectar();
+
+        $results = null;
+
+        try{
+            if(!empty($param)){
+                $stmt = $this->conexao->prepare($sql);
+                $stmt->execute($param);
+            }else{
+                $stmt = $this->conexao->prepare($sql);
+                $stmt->execute();
+            }
+
+        }catch(PDOException $e){
+            return false;
+        }
+
+        $this->desconectar();
+    }
+
+    public function update($sql, $param = null){
+
+        if(!preg_match('/^UPDATE/i', $sql)){
+            throw new Exception('Não é uma instrução UPDATE');
+            //die('Não é uma instrução SELECT');
+
+        }
+
+        $this->conectar();
+
+        $results = null;
+
+        try{
+            if(!empty($param)){
+                $stmt = $this->conexao->prepare($sql);
+                $stmt->execute($param);
+            }else{
+                $stmt = $this->conexao->prepare($sql);
+                $stmt->execute();
+            }
+
+        }catch(PDOException $e){
+            return false;
+        }
+
+        $this->desconectar();
+    }
+
+    public function delete($sql, $param = null){
+
+        if(!preg_match('/^DELETE/i', $sql)){
+            throw new Exception('Não é uma instrução DELETE');
+            //die('Não é uma instrução SELECT');
+
+        }
+
+        $this->conectar();
+
+        $results = null;
+
+        try{
+            if(!empty($param)){
+                $stmt = $this->conexao->prepare($sql);
+                $stmt->execute($param);
+            }else{
+                $stmt = $this->conexao->prepare($sql);
+                $stmt->execute();
+            }
+
+        }catch(PDOException $e){
+            return false;
+        }
+
+        $this->desconectar();
+    }
+
+    public function statement($sql, $param = null){
+
+        if(preg_match('/^(SELECT|INSERT|UPDATE|DELETE)/i', $sql)){
+            throw new Exception('Instrução inválida!');
+            //die('Não é uma instrução SELECT');
+
+        }
+
+        $this->conectar();
+
+        $results = null;
+
+        try{
+            if(!empty($param)){
+                $stmt = $this->conexao->prepare($sql);
+                $stmt->execute($param);
+            }else{
+                $stmt = $this->conexao->prepare($sql);
+                $stmt->execute();
+            }
+
+        }catch(PDOException $e){
+            return false;
+        }
+
+        $this->desconectar();
     }
 }

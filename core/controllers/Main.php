@@ -3,10 +3,13 @@
 namespace core\controllers;
 
 use core\classes\Database;
+use core\classes\enviarEmail;
 use core\classes\Store;
+use core\models\Clientes;
 
 class Main {
 
+    //Carregar o index - home.php
     public function index(){
 
         Store::Layout([
@@ -18,6 +21,7 @@ class Main {
         ]);
     }
 
+    //Carregar o loja - loja.php
     public function loja(){
         Store::Layout([
             'layouts/html_header',
@@ -28,6 +32,7 @@ class Main {
         ]);
     }
 
+    //Carregar o carrinho - carrinho.php
     public function carrinho(){
         Store::Layout([
             'layouts/html_header',
@@ -55,6 +60,7 @@ class Main {
         ]);
     }
 
+    //Validando o cadastro do cliente
     public function registrar(){
 
         //Verificar se já tem sessão aberta
@@ -76,50 +82,61 @@ class Main {
         }
 
         $db = new Database();
-        $parametros = [
-            'email' => strtolower(trim($_POST['email'])),
-        ];
-        $resultados = $db->select('SELECT * FROM clientes WHERE email = :email', $parametros);
-
-        if(count($resultados) != 0){
+        $cliente = new Clientes();
+        
+        if($cliente->verificarEmail($_POST['email'])){
             $_SESSION['erro'] = 'Já existe um cliente com este email';
             $this->cadastrar();
             return;
         }
 
-        $purl = Store::criarHash();
-        //echo $purl;
+        //Inserir cliente no banco e retornando o purl
+        $email_cliente = strtolower(trim($_POST['email']));
+        $purl = $cliente->registrarConta();
+    
+        //envio do email
+        $email = new enviarEmail();
+        $resultado = $email->enviarEmailCadastro($email_cliente, $purl);
 
-        $parametros = [
-            ':email' => strtolower(trim($_POST['email'])),
-            ':senha' => password_hash($_POST['email'], PASSWORD_DEFAULT),
-            ':nome' => (trim($_POST['nome'])),
-            ':endereco' => ($_POST['endereco']),
-            ':cidade' => $_POST['cidade'],
-            ':telefone' => (trim($_POST['telefone'])),
-            ':purl' => $purl,
-            ':ativo' => 0,
-        ];
-
-        $db->insert('INSERT INTO clientes 
-        VALUES (
-        null,
-        :email, 
-        :senha, 
-        :nome, 
-        :endereco, 
-        :cidade, 
-        :telefone, 
-        :purl, 
-        :ativo,
-        NOW(),
-        NOW(),
-        null
-        )', $parametros);
-        
-        $link_purl = 'http://localhost/sistema/WebStorePHP/public/?a=confirmar_email&purl='.$purl;
-
-        //Criar
+        if($resultado == true){
+            echo 'Email enviado com sucesso!';
+        }else{
+            echo 'Erro ao enviar o email';
+        }
         
     }
+
+    //Confirmar email
+    public function confirmar_email(){
+
+         //Verificar se já tem sessão aberta
+         if(Store::clienteLogado()){
+            $this->index();
+            return;
+        }
+
+        //verificar se existe purl
+        if(isset($_POST['purl'])){
+            $this->index();
+            return;
+        }
+
+        $purl = $_GET['purl'];
+
+        //verifica se purl é valido
+        if(strlen($purl) != 12){
+            $this->index();
+            return;
+        }
+
+        $cliente = new Clientes();
+        $resultado = $cliente->validarEmail($purl);
+
+        if($resultado == true){
+            echo 'Conta registrada com sucesso!';
+        }else{
+            echo 'Falha ao registrar';
+        }
+    }
+
 }

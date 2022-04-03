@@ -1,9 +1,6 @@
 <?php
 
 //Inicializando a sessão
-
-use core\classes\Database;
-
 session_start();
 
 //carrega todas as classes do projeto

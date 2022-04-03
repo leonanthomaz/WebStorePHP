@@ -3,7 +3,6 @@
 $rotas = [
     'inicio' => 'main@index',
     'loja' => 'main@loja',
-    'carrinho' => 'loja@carrinho'
 ];
 
 $acao = 'inicio';

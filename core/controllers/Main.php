@@ -107,7 +107,9 @@ class Main {
                 'layouts/html_footer'
             ]);
         }else{
-            echo 'Erro ao enviar o email';
+            
+            //Redireciona pagina inicial
+            Store::redirect();
         }
         
     }
@@ -149,19 +151,74 @@ class Main {
             ]);
 
         }else{
-            echo 'Falha ao registrar';
+           
+            //Redireciona pagina inicial
+            Store::redirect();
         }
     }
 
     public function login(){
 
+        //Verificar se existe cliente logado
+        if(Store::clienteLogado()){
+            Store::redirect();
+            return;
+        }
+
+        //Apresentação do formulário
         Store::Layout([
             'layouts/html_header',
             'layouts/header',
-            'login',
+            'login_form',
             'layouts/footer',
             'layouts/html_footer'
         ]);
+        
+    }
+
+    public function conectar(){
+
+        //Verificar se existe cliente logado
+        if(Store::clienteLogado()){
+            Store::redirect();
+            return;
+        }
+
+        //Verificando se tem o post do form login
+        if($_SERVER['REQUEST_METHOD'] != 'POST'){
+            Store::redirect();
+            return;
+        }
+
+        if(empty($_POST['email'])){
+            $_SESSION['erro'] = 'Login inválido';
+            Store::redirect('login');
+            return;
+        }
+
+        if(empty($_POST['senha'])){
+            $_SESSION['erro'] = 'Login inválido';
+            Store::redirect('login');
+            return;
+        }
+
+        if(!filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)){
+            $_SESSION['erro'] = 'Login inválido';
+            Store::redirect('login');
+            return;
+        }
+
+        // if(
+        // !isset($_POST['email']) || 
+        // !isset($_POST['senha']) ||
+        // !filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)){
+        //     $_SESSION['erro'] = 'Login inválido';
+        //     Store::redirect('login');
+        //     return;
+        // }
+
+        echo 'Ok';
+
     }
 
 }

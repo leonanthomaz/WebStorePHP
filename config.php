@@ -17,5 +17,7 @@ DEFINE('EMAIL_HOST', 'smtp.gmail.com');
 DEFINE('EMAIL_FROM', 'leonanthomaz.projetos@gmail.com');
 DEFINE('EMAIL_PASS', 'leonan2klnet');
 DEFINE('EMAIL_PORT', '587');
+DEFINE('EMAIL_CHARSET', 'UTF-8');
+
 
 

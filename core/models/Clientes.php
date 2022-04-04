@@ -82,6 +82,7 @@ class Clientes {
         $db->update('UPDATE clientes SET purl = null, ativo = 1, update_at = NOW()');
 
         return true;
+        
     }
 
     

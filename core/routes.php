@@ -6,7 +6,10 @@ $rotas = [
     'carrinho' => 'main@carrinho',
     'cadastrar' => 'main@cadastrar',
     'registrar' => 'main@registrar',
+    'cadastro_solicitado' => 'main@cadastro_solicitado',
     'confirmar_email' => 'main@confirmar_email',
+    'login' => 'main@login',
+
 ];
 
 $acao = 'inicio';

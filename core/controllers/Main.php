@@ -99,7 +99,13 @@ class Main {
         $resultado = $email->enviarEmailCadastro($email_cliente, $purl);
 
         if($resultado == true){
-            echo 'Email enviado com sucesso!';
+            Store::Layout([
+                'layouts/html_header',
+                'layouts/header',
+                'cadastro_solicitado',
+                'layouts/footer',
+                'layouts/html_footer'
+            ]);
         }else{
             echo 'Erro ao enviar o email';
         }
@@ -133,10 +139,29 @@ class Main {
         $resultado = $cliente->validarEmail($purl);
 
         if($resultado == true){
-            echo 'Conta registrada com sucesso!';
+
+            Store::Layout([
+                'layouts/html_header',
+                'layouts/header',
+                'validacao_realizada',
+                'layouts/footer',
+                'layouts/html_footer'
+            ]);
+
         }else{
             echo 'Falha ao registrar';
         }
+    }
+
+    public function login(){
+
+        Store::Layout([
+            'layouts/html_header',
+            'layouts/header',
+            'login',
+            'layouts/footer',
+            'layouts/html_footer'
+        ]);
     }
 
 }

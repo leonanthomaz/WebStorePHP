@@ -25,7 +25,7 @@ class enviarEmail {
             $mail->Password   = EMAIL_PASS;                               
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            
             $mail->Port       = EMAIL_PORT;   
-            $mail -> charSet = "UTF-8";                                 
+            $mail->CharSet = EMAIL_CHARSET;                              
 
             $mail->SMTPOptions = array(
                 'ssl' => array(

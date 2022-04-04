@@ -190,35 +190,57 @@ class Main {
             return;
         }
 
-        if(empty($_POST['email'])){
+        // validar se os campos vieram corretamente preenchidos
+        if (
+            !isset($_POST['email']) ||
+            !isset($_POST['senha']) ||
+            !filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)
+        ) {
+            // erro de preenchimento do formulário
             $_SESSION['erro'] = 'Login inválido';
             Store::redirect('login');
             return;
         }
 
-        if(empty($_POST['senha'])){
-            $_SESSION['erro'] = 'Login inválido';
+        //Prepara os dados para o model
+        $usuario = trim(strtolower($_POST['email']));
+        $senha = trim($_POST['senha']);
+
+        //carrega o model e verifica
+        $cliente = new Clientes();
+        $resultado = $cliente->validarLogin($usuario, $senha);
+
+        if(is_bool($resultado)){
+            $_SESSION['erro'] = 'Login inválido...';
             Store::redirect('login');
             return;
-        }
+        }else{
 
-        if(!filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)){
-            $_SESSION['erro'] = 'Login inválido';
-            Store::redirect('login');
-            return;
-        }
+           // login válido. Coloca os dados na sessão
+           $_SESSION['cliente'] = $resultado->id_cliente;
+           $_SESSION['usuario'] = $resultado->email;
+           $_SESSION['nome'] = $resultado->nome;
 
-        // if(
-        // !isset($_POST['email']) || 
-        // !isset($_POST['senha']) ||
-        // !filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)){
-        //     $_SESSION['erro'] = 'Login inválido';
-        //     Store::redirect('login');
-        //     return;
-        // }
+           // redirecionar para o início da nossa loja
+           Store::redirect();
+        }
 
         echo 'Ok';
 
+    }
+
+    // ===========================================================
+    public function logout(){
+
+        // remove as variáveis da sessão
+        unset($_SESSION['cliente']);
+        unset($_SESSION['usuario']);
+        unset($_SESSION['nome']);
+
+        //session_destroy();
+
+        // redireciona para o início da loja
+        Store::redirect();
     }
 
 }

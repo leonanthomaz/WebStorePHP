@@ -12,17 +12,6 @@
                 </div>
             <?php endif; ?>
 
-            <?php if(isset($_SESSION['erro'])): ?>
-                <div class="alert alert-danger text-center p-2">
-                    <strong>
-                        <?php echo $_SESSION['erro'] ?>
-                        <?php unset($_SESSION['erro']); ?>
-                    </strong>
-                </div>
-            <?php else: ?>
-                
-            <?php endif; ?>
-
             <form action="?a=conectar" method="post">
                 <div class="container">
    

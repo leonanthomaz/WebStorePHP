@@ -22,8 +22,11 @@ use core\classes\Store;
             <?php 
             if(Store::clienteLogado()):
             ?>
-            <a href="?a=logout" class="navigation-link">Logout</a>
-            <a href="?a=minha_conta" class="navigation-link">Minha Conta</a>
+            <a href="?a=logout" class="navigation-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+            <a href="?a=minha_conta" class="navigation-link">
+                <i class="fa-solid fa-user"></i>
+                <?php echo $_SESSION['usuario'] ?>
+            </a>
             <?php else: ?>
             <a href="?a=login" class="navigation-link">Login</a>
             <a href="?a=cadastrar" class="navigation-link">Cadastrar</a>

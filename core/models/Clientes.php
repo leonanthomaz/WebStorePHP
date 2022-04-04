@@ -10,10 +10,10 @@ class Clientes {
     
     public function verificarEmail($email){
         $db = new Database();
-        $parametros = [
+        $param = [
             'email' => strtolower(trim($email)),
         ];
-        $resultados = $db->select('SELECT * FROM clientes WHERE email = :email', $parametros);
+        $resultados = $db->select('SELECT * FROM clientes WHERE email = :email', $param);
 
         if(count($resultados) != 0){
             $_SESSION['erro'] = 'Já existe um cliente com este email';
@@ -29,9 +29,9 @@ class Clientes {
         $purl = Store::criarHash();
         //echo $purl;
 
-        $parametros = [
+        $param = [
             ':email' => strtolower(trim($_POST['email'])),
-            ':senha' => password_hash($_POST['email'], PASSWORD_DEFAULT),
+            ':senha' => password_hash($_POST['senha'], PASSWORD_DEFAULT),
             ':nome' => (trim($_POST['nome'])),
             ':endereco' => ($_POST['endereco']),
             ':cidade' => $_POST['cidade'],
@@ -54,7 +54,7 @@ class Clientes {
         NOW(),
         NOW(),
         null
-        )', $parametros);
+        )', $param);
 
         return $purl;
     }
@@ -62,10 +62,10 @@ class Clientes {
     public function validarEmail($purl){
         
         $db = new Database();
-        $parametros = [
+        $param = [
             ':purl' => $purl
         ];
-        $resultados = $db->select('SELECT * FROM clientes WHERE purl = :purl', $parametros);
+        $resultados = $db->select('SELECT * FROM clientes WHERE purl = :purl', $param);
 
         if(count($resultados) != 1){
             return false;
@@ -75,7 +75,7 @@ class Clientes {
         $id_cliente = $resultados[0]->id_cliente;
 
         //atualizar dados do cliente
-        $parametros = [
+        $param = [
             ':id_cliente' => $id_cliente
         ];
 
@@ -83,6 +83,31 @@ class Clientes {
 
         return true;
         
+    }
+
+    public function validarLogin($usuario, $senha){
+        $param = [
+            ':usuario' => $usuario,
+        ];
+
+        $db = new Database();
+
+        $resultados = $db->select('SELECT * FROM clientes WHERE email = :usuario AND ativo = 1 AND delete_at IS NULL', $param);
+ 
+        if(count($resultados) != 1){
+            return false;
+        }else{
+            $usuario = $resultados[0];
+            if(!password_verify($senha, $usuario->senha)){
+                // não existe usuário
+                return false;
+            }else{
+                // login válido
+                return $usuario;
+            }
+        }
+
+
     }
 
     

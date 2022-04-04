@@ -1,0 +1,21 @@
+.navigation{
+    background-color: #ff0000da;
+    color: white;
+}
+
+.footer-main{
+    background-color: #4b4b4bc5;
+    color: white;
+}
+
+.navigation-link{
+    text-decoration: none;
+    color: white;
+    margin: 0px 5px;
+}
+
+.navigation-link:hover{
+    text-decoration: underline;
+    color: white;
+    margin: 0px 5px;
+}

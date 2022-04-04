@@ -31,6 +31,8 @@ class Database {
 
     public function select($sql, $param = null){
 
+        $sql = trim($sql);
+
         if(!preg_match('/^SELECT/i', $sql)){
             throw new Exception('Não é uma instrução SELECT');
             //die('Não é uma instrução SELECT');
@@ -62,6 +64,7 @@ class Database {
     }
 
     public function insert($sql, $param = null){
+        $sql = trim($sql);
 
         if(!preg_match('/^INSERT/i', $sql)){
             throw new Exception('Não é uma instrução INSERT');
@@ -91,6 +94,8 @@ class Database {
 
     public function update($sql, $param = null){
 
+        $sql = trim($sql);
+
         if(!preg_match('/^UPDATE/i', $sql)){
             throw new Exception('Não é uma instrução UPDATE');
             //die('Não é uma instrução SELECT');
@@ -119,6 +124,8 @@ class Database {
 
     public function delete($sql, $param = null){
 
+        $sql = trim($sql);
+
         if(!preg_match('/^DELETE/i', $sql)){
             throw new Exception('Não é uma instrução DELETE');
             //die('Não é uma instrução SELECT');
@@ -146,6 +153,8 @@ class Database {
     }
 
     public function statement($sql, $param = null){
+
+        $sql = trim($sql);
 
         if(preg_match('/^(SELECT|INSERT|UPDATE|DELETE)/i', $sql)){
             throw new Exception('Instrução inválida!');

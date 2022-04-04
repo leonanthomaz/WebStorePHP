@@ -6,6 +6,7 @@ use core\classes\Database;
 use core\classes\enviarEmail;
 use core\classes\Store;
 use core\models\Clientes;
+use core\models\Produtos;
 
 class Main {
 
@@ -23,13 +24,21 @@ class Main {
 
     //Carregar o loja - loja.php
     public function loja(){
+
+        //Buscar a lista de produtos
+        $produtos = new Produtos();
+        $lista_produtos = $produtos->listaProdutosDisponiveis();
+        
+        Store::printData($lista_produtos);
+
         Store::Layout([
             'layouts/html_header',
             'layouts/header',
             'loja',
             'layouts/footer',
-            'layouts/html_footer'
-        ]);
+            'layouts/html_footer',
+            
+        ], ['produtos' => $lista_produtos]);
     }
 
     //Carregar o carrinho - carrinho.php

@@ -8,6 +8,7 @@ use core\classes\Store;
 
 class Clientes {
     
+    //Função verificar email
     public function verificarEmail($email){
         $db = new Database();
         $param = [
@@ -23,6 +24,7 @@ class Clientes {
         }
     }
 
+    //Registrar nova conta
     public function registrarConta(){
         $db = new Database();
 
@@ -59,6 +61,7 @@ class Clientes {
         return $purl;
     }
 
+    //Validar o email - PHPMailer
     public function validarEmail($purl){
         
         $db = new Database();
@@ -79,12 +82,13 @@ class Clientes {
             ':id_cliente' => $id_cliente
         ];
 
-        $db->update('UPDATE clientes SET purl = null, ativo = 1, update_at = NOW()');
+        $db->update('UPDATE clientes SET purl = null, ativo = 1, updated_at = NOW() WHERE id_cliente = :id_cliente');
 
         return true;
         
     }
 
+    //Verificando Login
     public function validarLogin($usuario, $senha){
         $param = [
             ':usuario' => $usuario,
@@ -92,7 +96,7 @@ class Clientes {
 
         $db = new Database();
 
-        $resultados = $db->select('SELECT * FROM clientes WHERE email = :usuario AND ativo = 1 AND delete_at IS NULL', $param);
+        $resultados = $db->select('SELECT * FROM clientes WHERE email = :usuario AND ativo = 1 AND deleted_at IS NULL', $param);
  
         if(count($resultados) != 1){
             return false;

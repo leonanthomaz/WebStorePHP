@@ -1,0 +1,3 @@
+Incluindo arquivo de texto 1
+
+Incluindo segunda linha texto2

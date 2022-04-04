@@ -3,11 +3,16 @@
 $rotas = [
     'inicio' => 'main@index',
     'loja' => 'main@loja',
+
     'carrinho' => 'main@carrinho',
+
+    //Cliente - cadastro
     'cadastrar' => 'main@cadastrar',
     'registrar' => 'main@registrar',
     'cadastro_solicitado' => 'main@cadastro_solicitado',
     'confirmar_email' => 'main@confirmar_email',
+
+    //Cliente - acesso
     'login' => 'main@login',
     'logout' => 'main@logout',
     'conectar' => 'main@conectar',

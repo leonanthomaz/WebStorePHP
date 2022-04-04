@@ -27,9 +27,23 @@ class Main {
 
         //Buscar a lista de produtos
         $produtos = new Produtos();
-        $lista_produtos = $produtos->listaProdutosDisponiveis();
         
-        Store::printData($lista_produtos);
+        $c = 'todos';
+
+        if(isset($_GET['c'])){
+            $c = $_GET['c'];
+        }
+
+        //Buscar no banco
+        $lista_produtos = $produtos->listaProdutosDisponiveis($c);
+        $lista_categorias = $produtos->listaCategorias();
+
+        $dados = [
+            'produtos' => $lista_produtos,
+            'categorias' => $lista_categorias,
+        ];
+        
+        //Store::printData($lista_produtos);
 
         Store::Layout([
             'layouts/html_header',
@@ -38,7 +52,7 @@ class Main {
             'layouts/footer',
             'layouts/html_footer',
             
-        ], ['produtos' => $lista_produtos]);
+        ], $dados);
     }
 
     //Carregar o carrinho - carrinho.php

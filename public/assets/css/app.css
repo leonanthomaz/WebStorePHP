@@ -1,6 +1,14 @@
+*{
+    box-shadow: inset 0px 0px 1px rgba(255, 0, 0, 1);
+}
+
 .navigation{
     background-color: #ff0000da;
     color: white;
+}
+
+.store{
+    margin-bottom: 80px;
 }
 
 .footer-main{

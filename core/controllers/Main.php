@@ -57,6 +57,8 @@ class Main {
 
     //Carregar o carrinho - carrinho.php
     public function carrinho(){
+        
+
         Store::Layout([
             'layouts/html_header',
             'layouts/header',

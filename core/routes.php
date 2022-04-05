@@ -4,8 +4,6 @@ $rotas = [
     'inicio' => 'main@index',
     'loja' => 'main@loja',
 
-    'carrinho' => 'main@carrinho',
-
     //Cliente - cadastro
     'cadastrar' => 'main@cadastrar',
     'registrar' => 'main@registrar',
@@ -16,6 +14,11 @@ $rotas = [
     'login' => 'main@login',
     'logout' => 'main@logout',
     'conectar' => 'main@conectar',
+
+    //Carrinho
+    'add_carrinho' => 'carrinho@add_carrinho',
+    'carrinho' => 'carrinho@carrinho',
+    'limpar_carrinho' => 'carrinho@limpar_carrinho',
 
 ];
 

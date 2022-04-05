@@ -43,4 +43,19 @@ class Produtos {
         return $categorias;
     }
 
+    public function verificarEstoqueProduto($id_produto){
+        $db = new Database();
+        $param = [
+            'id_produto' => $id_produto
+        ];
+        $resultados = $db->select('SELECT * FROM produtos WHERE id_produto = :id_produto AND visivel = 1 AND estoque > 0', $param);
+        return count($resultados) != 0 ? true : false;
+        
+    }
+
+    public function buscarProdutosPorID($ids){
+        $db = new Database();
+        return $db->select('SELECT * FROM produtos WHERE id_produto IN ('.$ids.')');
+    }
+
 }

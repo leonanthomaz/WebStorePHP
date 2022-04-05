@@ -19,6 +19,11 @@ $rotas = [
     'add_carrinho' => 'carrinho@add_carrinho',
     'carrinho' => 'carrinho@carrinho',
     'limpar_carrinho' => 'carrinho@limpar_carrinho',
+    'remover_item' => 'carrinho@remover_item',
+    'finalizar_pedido' => 'carrinho@finalizar_pedido',
+    'finalizar_pedido_resumo' => 'carrinho@finalizar_pedido_resumo',
+    'set_endereco_alternativo' => 'carrinho@set_endereco_alternativo',
+    'metodo_pagamento' => 'carrinho@metodo_pagamento',
 
 ];
 

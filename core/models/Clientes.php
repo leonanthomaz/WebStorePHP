@@ -24,6 +24,8 @@ class Clientes {
         }
     }
 
+     // ===========================================================    
+
     //Registrar nova conta
     public function registrarConta(){
         $db = new Database();
@@ -61,6 +63,9 @@ class Clientes {
         return $purl;
     }
 
+    // ===========================================================    
+
+
     //Validar o email - PHPMailer
     public function validarEmail($purl){
         
@@ -88,6 +93,8 @@ class Clientes {
         
     }
 
+    // ===========================================================    
+
     //Verificando Login
     public function validarLogin($usuario, $senha){
         $param = [
@@ -114,5 +121,16 @@ class Clientes {
 
     }
 
-    
+    // ===========================================================    
+
+    public function buscar_dados_cliente($id_cliente){
+        $param = [
+            'id_cliente' => $id_cliente
+        ];
+
+        $db = new Database();
+        $resultados = $db->select('SELECT * FROM clientes WHERE id_cliente = :id_cliente', $param);
+        return $resultados[0];
+    }
+
 }

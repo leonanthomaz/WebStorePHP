@@ -1,6 +1,3 @@
-<?php
-print_r($_SESSION);
-?>
 
 <div class="container store">
 

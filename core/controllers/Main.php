@@ -246,8 +246,13 @@ class Main {
            $_SESSION['usuario'] = $resultado->email;
            $_SESSION['nome'] = $resultado->nome;
 
-           // redirecionar para o início da nossa loja
-           Store::redirect();
+           // se não, redirecionar para o 
+           if(isset($_SESSION['tmp_carrinho'])){
+            unset($_SESSION['tmp_carrinho']);
+            Store::redirect('finalizar_pedido_resumo');
+           }else{
+            Store::redirect();
+           } 
         }
 
         echo 'Ok';

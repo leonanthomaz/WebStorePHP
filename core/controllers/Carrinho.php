@@ -35,18 +35,21 @@ class Carrinho {
             //Ciclo de vida do carrinho
             $dados_tmp = [];
             foreach($_SESSION['carrinho'] as $id_produto => $qtd){
+
                 foreach($resultados as $produto){
                     if($produto->id_produto == $id_produto){
+                        $id_produto = $produto->id_produto;
                         $imagem = $produto->imagem;
                         $titulo = $produto->nome;
                         $quantidade = $qtd;
                         $preco = $produto->preco * $qtd;
     
                         array_push($dados_tmp, [
-                            'imagem' => $imagem,
-                                'titulo' => $titulo,
-                                    'quantidade' => $quantidade,
-                                        'preco' => $preco,
+                            'id_produto' => $id_produto,
+                                'imagem' => $imagem,
+                                    'titulo' => $titulo,
+                                        'quantidade' => $quantidade,
+                                            'preco' => $preco,
                         ]);
                         break;
                     }
@@ -60,9 +63,7 @@ class Carrinho {
             }
 
             //Acrescentando os dados temporarios ao Total
-            array_push($dados_tmp, [
-                'Total' => $total_cart
-            ]);
+            array_push($dados_tmp, $total_cart);
 
             $dados = [
                 'carrinho' => $dados_tmp
@@ -129,5 +130,119 @@ class Carrinho {
         unset($_SESSION['carrinho']);
         //Atualizar para o carrinho
         $this->carrinho();
+    }
+
+    public function remover_item(){
+        $id_produto = $_GET['id_produto'];
+        $carrinho = $_SESSION['carrinho'];
+        unset($carrinho[$id_produto]);
+        $_SESSION['carrinho'] = $carrinho;
+        $this->carrinho();
+    }
+
+    public function finalizar_pedido(){
+
+        //Store::printData($_SESSION);
+        if(!isset($_SESSION['cliente'])){
+            $_SESSION['tmp_carrinho'] = true;
+            Store::redirect('login');
+        }else{
+            Store::redirect('finalizar_pedido_resumo');
+        }
+    }
+
+    public function finalizar_pedido_resumo(){
+
+        if(!isset($_SESSION['cliente'])){
+            Store::redirect('inicio');
+        }
+
+        $ids = [];
+        foreach($_SESSION['carrinho'] as $id_produto => $qtd){
+            array_push($ids, $id_produto);
+        }
+
+        $ids = implode(',', $ids);
+        $produtos = new Produtos();
+        $resultados = $produtos->buscarProdutosPorID($ids);
+
+        //Ciclo de vida do carrinho
+        $dados_tmp = [];
+        foreach($_SESSION['carrinho'] as $id_produto => $qtd){
+
+            foreach($resultados as $produto){
+                if($produto->id_produto == $id_produto){
+                    $id_produto = $produto->id_produto;
+                    $imagem = $produto->imagem;
+                    $titulo = $produto->nome;
+                    $quantidade = $qtd;
+                    $preco = $produto->preco * $qtd;
+
+                    array_push($dados_tmp, [
+                        'id_produto' => $id_produto,
+                            'imagem' => $imagem,
+                                'titulo' => $titulo,
+                                    'quantidade' => $quantidade,
+                                        'preco' => $preco,
+                    ]);
+                    break;
+                }
+            }
+        }
+
+        //Pegando o total
+        $total_cart = 0;
+        foreach($dados_tmp as $item){
+            $total_cart += $item['preco'];
+        }
+
+        //Acrescentando os dados temporarios ao Total
+        array_push($dados_tmp, $total_cart);
+
+        $dados = [];
+        $dados['carrinho'] = $dados_tmp;
+
+        //Buscar informações do cliente
+        $cliente = new Clientes();
+        $dados_cliente = $cliente->buscar_dados_cliente($_SESSION['cliente']);
+        $dados['cliente'] = $dados_cliente;
+        
+        //Layout do carrinho
+        Store::Layout([
+            'layouts/html_header',
+            'layouts/header',
+            'finalizar_pedido_resumo',
+            'layouts/footer',
+            'layouts/html_footer'
+        ], $dados);
+    }
+
+    public function set_endereco_alternativo(){
+
+        $post = json_decode(file_get_contents('php://input'), true);
+
+        $_SESSION['dados_alternativos'] = [
+            'endereco' => $post['endereco'],
+            'cidade' => $post['cidade'],
+            'email' => $post['email'],
+            'telefone' => $post['telefone'],
+        ];
+       
+    }
+
+    public function metodo_pagamento(){
+
+        echo 'escolher_metodo_pagamento';
+
+        // $post = json_decode(file_get_contents('php://input'), true);
+
+        // $_SESSION['dados_alternativos'] = [
+        //     'endereco' => $post['endereco_alternativo'],
+        //     'cidade' => $post['cidade_alternativo'],
+        //     'email' => $post['email_alternativo'],
+        //     'telefone' => $post['telefone_alternativo'],
+        // ];
+
+        Store::printData($_SESSION);
     }
 }

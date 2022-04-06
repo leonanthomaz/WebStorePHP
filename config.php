@@ -14,8 +14,8 @@ DEFINE('MYSQL_CHARSET', 'utf8');
 
 // Mail
 DEFINE('EMAIL_HOST', 'smtp.gmail.com');
-DEFINE('EMAIL_FROM', 'leonanthomaz.projetos@gmail.com');
-DEFINE('EMAIL_PASS', 'leonan2klnet');
+DEFINE('EMAIL_FROM', '');
+DEFINE('EMAIL_PASS', '');
 DEFINE('EMAIL_PORT', '587');
 DEFINE('EMAIL_CHARSET', 'UTF-8');
 

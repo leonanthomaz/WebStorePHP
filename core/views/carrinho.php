@@ -64,8 +64,8 @@
                          <!-- <a id="confirmar_limpar_carrinho" href="?a=limpar_carrinho" class="btn btn-sm btn-outline-primary">Limpar</a> -->
                          <a id="confirmar_limpar_carrinho" class="btn btn-sm btn-outline-primary">Limpar</a>
                         <span class="box-confirm" style="display: none;">Deseja realmente?
-                            <a class="btn btn-sm btn-outline-primary" id="box-confirm-off">não doidão, cêloko?</a>
-                            <a class="btn btn-sm btn-outline-danger" id="box-confirm-on" href="?a=limpar_carrinho">claro, maluco</a>
+                            <a class="btn btn-sm btn-outline-primary" id="box-confirm-off">Não</a>
+                            <a class="btn btn-sm btn-outline-danger" id="box-confirm-on" href="?a=limpar_carrinho">Sim</a>
                         </span>
                     </div>
 

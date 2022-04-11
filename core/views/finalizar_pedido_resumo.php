@@ -69,6 +69,16 @@
                     </div>
                 </div>
 
+                <!-- Dados de Pagamento -->
+                <h5 class="bg-dark text-white p-2">Dados do pagamento</h5>
+                <div class="row">
+                    <div class="col">
+                    <p>Conta bancária: 2425436546</p>
+                    <p>Código da compra: <strong><?= $_SESSION['codigo_compra']; ?></strong></p>
+                    <p>Total: <strong><?php echo 'R$'.str_replace('.', ',', $produto) ?></strong></p>
+                    </div>
+                </div>
+
 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="use_endereco_alternativo" id="use_endereco_alternativo">

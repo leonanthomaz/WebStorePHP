@@ -29,6 +29,15 @@ class Store {
         return substr(str_shuffle($chars), 0, $num_caracteres);
     }
 
+    public static function gerarCodigoCompra(){
+        //Gerando código da compra
+        $codigo = '';
+        $chars = 'ABCDEFGHIJKLMNOPKRSTUWYXZABCDEFGHIJKLMNOPKRSTUWYXZABCDEFGHIJKLMNOPKRSTUWYXZ';
+        $codigo .= substr(str_shuffle($chars), 0,2);
+        $codigo .= rand(100000, 999999);
+        return $codigo;
+    }
+
     public static function redirect($rota = ''){
         //Redirecionamento de rota
         header('Location:'.BASE_URL.'?a='.$rota);

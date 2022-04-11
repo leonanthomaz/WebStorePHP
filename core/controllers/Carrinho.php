@@ -206,7 +206,15 @@ class Carrinho {
         $cliente = new Clientes();
         $dados_cliente = $cliente->buscar_dados_cliente($_SESSION['cliente']);
         $dados['cliente'] = $dados_cliente;
-        
+
+        //gerando codigo da compra
+
+        if(!isset($_SESSION['codigo_compra'])){
+            $codigo_compra = Store::gerarCodigoCompra();
+            $_SESSION['codigo_compra'] = $codigo_compra;
+        }
+        //$dados['codigo_compra'] = $codigo_compra;
+
         //Layout do carrinho
         Store::Layout([
             'layouts/html_header',
